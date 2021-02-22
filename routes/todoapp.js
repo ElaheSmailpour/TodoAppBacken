@@ -4,7 +4,7 @@ const { check } = require("express-validator")
 
 
 const {
-  erstelleaufgabe, Datenholen,Datenholenmitid
+  erstelleaufgabe, Datenholen,Datenholenmitid,update,Aufgabelöschen
 } = require('../controller/todoapp-controller');
 
 
@@ -18,7 +18,8 @@ router
   
   router.route("/:_id")
   .get(Datenholenmitid)
-
+  .put(validAufgabeUpdate,update)
+.delete(Aufgabelöschen)
 
 
 

@@ -33,19 +33,55 @@ exports.erstelleaufgabe = (req, res, next) => {
 		}
 	)
 }
-	//get mit id
-	exports.Datenholenmitid = (req, res, next) => {
-		const { _id } = req.params;
+//get mit id
+exports.Datenholenmitid = (req, res, next) => {
+	const { _id } = req.params;
 
-		TodoApp.findOne({ _id }).then(
-			(ergebnis) => {
-				res.status(200).send(ergebnis);
+	TodoApp.findOne({ _id }).then(
+		(ergebnis) => {
+			res.status(200).send(ergebnis);
+		}
+	)
+		.catch(
+			(fehler) => {
+				res.status(500).send({ message: "Fehler bei GET:/_id", objekt: fehler });
 			}
 		)
-			.catch(
-				(fehler) => {
-					res.status(500).send({ message: "Fehler bei GET:/_id", objekt: fehler });
-				}
-			)
+}
+//put 
+
+exports.update = (req, res, next) => {
+	const { _id } = req.params;
+	const nutzerDaten = req.body
+	const errors = validationResult(req)
+	if (!errors.isEmpty()) {
+		return res.status(422).json({
+			fehlerBeiValidierung: errors.array()
+		})
 	}
+	TodoApp.findOneAndUpdate({ _id }, nutzerDaten, { new: true, upsert: true }).then(
+		(ergebnis) => {
+			res.status(200).send(ergebnis);
+		}
+	)
+		.catch(
+			(fehler) => {
+				res.status(500).send({ message: "Fehler bei GET:/_id", objekt: fehler });
+			}
+		)
+}
+exports.Aufgabelöschen=(req,res,next)=>{
+	const {_id}=req.params
+	TodoApp.deleteOne({_id}).then(
+		(ergebnis) => {
+			res.status(200).send(ergebnis);
+		}
+	)
+		.catch(
+			(fehler) => {
+				res.status(500).send({ message: "Fehler bei GET:/_id", objekt: fehler });
+			}
+		)
+}
+
 
