@@ -46,3 +46,6 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+//wenn haben wir im visual studio 
+//eine env datei
+// und müsseen wir nicht im github pushen müssen wir in visual studio eine datei gitignore erstellen und da .env schreiben und dann im terminal git rm --cached .env  schreiben und dann git add . und git commit -m "WWe" und dann git push machen

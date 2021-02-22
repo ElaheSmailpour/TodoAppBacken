@@ -1,21 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const {check}=require("express-validator")
+const { check } = require("express-validator")
 
 
 const {
-  erstelleaufgabe,Datenholen
+  erstelleaufgabe, Datenholen,Datenholenmitid
 } = require('../controller/todoapp-controller');
 
 
 const validAufgabeUpdate = [
- check("aufgabe","bitte geben")
+  check("aufgabe", "bitte  hier etwas eingeben").not().isEmpty().trim()
 ]
 router
-    .route('/')
-    .get(Datenholen)
-        .post(erstelleaufgabe)
-       
+  .route('/')
+  .get(Datenholen)
+  .post(validAufgabeUpdate, erstelleaufgabe)
+  
+  router.route("/:_id")
+  .get(Datenholenmitid)
+
 
 
 
