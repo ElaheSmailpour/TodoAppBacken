@@ -5,13 +5,13 @@ const { check } = require("express-validator")
 
 const {
   erstelleaufgabe, Datenholen,Datenholenmitid,update,Aufgabelöschen
-} = require('../controller/todoapp-controller');
+} = require('../controller/usertodoapp-controller');
 
 
 const validAufgabeUpdate = [
-  check("aufgabe", "bitte  hier etwas eingeben").not().isEmpty().trim(),
+  check("email", "geben Sie bitte Ihre email!").trim().isEmail(),
 
-  check ("datum","bitte geben Sie hier Datum!").not().isEmpty().isISO8601()
+  check ("passwort","geben Sie bitte Ihre passwort!").not().isEmpty().isStrongPassword()
 ]
 router
   .route('/')

@@ -1,6 +1,6 @@
 
 const { validationResult } = require('express-validator')
-const TodoApp = require("../models/todoappmodel")
+const TodoApp = require("../models/usertodoapp")
 
 //get
 exports.Datenholen = (req, res, next) => {
