@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check } = require("express-validator")
 
+const auth = require("../middleware/auth")
 
 const {
   erstelleaufgabe, Datenholen,Datenholenmitid,update,Aufgabelöschen
@@ -16,12 +17,12 @@ const validAufgabeUpdate = [
 router
   .route('/')
   .get(Datenholen)
-  .post(validAufgabeUpdate, erstelleaufgabe)
+  .post(auth,validAufgabeUpdate, erstelleaufgabe)
   
   router.route("/:_id")
   .get(Datenholenmitid)
-  .put(validAufgabeUpdate,update)
-.delete(Aufgabelöschen)
+  .put(auth,validAufgabeUpdate,update)
+.delete(auth,Aufgabelöschen)
 
 
 

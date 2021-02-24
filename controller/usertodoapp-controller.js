@@ -26,7 +26,7 @@ exports.erstelleaufgabe = async (req, res, next) => {
 				fehlerBeiValidierung: errors.array()
 			})
 		}
-		
+	
 		let schonVorhandenUser = await TodoApp.find({ email: nutzer.email })
 		if (schonVorhandenUser.length >= 1) {
 			return res.status(409).send('Es gib schon einen Nutzer mit dieser Email')
@@ -83,7 +83,8 @@ exports.update = (req, res, next) => {
 }
 exports.Aufgabelöschen=(req,res,next)=>{
 	const {_id}=req.params
-	TodoApp.deleteOne({_id}).then(
+	//TodoApp.deleteOne({_id}).then(
+		TodoApp.deleteOne({aufgabe:_id}).then(
 		(ergebnis) => {
 			res.status(200).send(ergebnis);
 		}
@@ -99,14 +100,14 @@ exports.Aufgabelöschen=(req,res,next)=>{
 exports.nutzerEinloggen = async (req, res, next) => {
 	let nutzer = req.body
 	try {
-		
+	
 		let userVonDatenbank = await TodoApp.findOne({ email: nutzer.email })
 		console.log(userVonDatenbank);
 	
 		if (userVonDatenbank === null) {
 			return res.status(401).send('Du konntest nicht eingeloggt werden')
 		}
-	
+
 		let vergleichVonPasswort = await bcrypt.compare(nutzer.passwort, userVonDatenbank.passwort)
 		
 		if (vergleichVonPasswort) {

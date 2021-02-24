@@ -5,7 +5,8 @@ const TodoSchema = new Schema(
   {
    
       aufgabe: String,
-      datum: Date
+      datum: Date,
+      userId:String
 
     }
     

@@ -3,7 +3,8 @@ const { Schema } = mongoose;
 
 const UsertodoSchema = new Schema(
   {
-   
+    vorname: String,
+    nachname: String,
       email: String,
       passwort: String
 
