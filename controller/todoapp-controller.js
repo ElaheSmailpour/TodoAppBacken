@@ -5,7 +5,7 @@ const TodoApp = require("../models/todoappmodel")
 //get
 exports.Datenholen = (req, res, next) => {
 	
-	TodoApp.find().then((ergebnis) => {
+	TodoApp.find({userId:req.tokenNutzer.userId}).then((ergebnis) => {
 		res.status(200).send(ergebnis)
 	})
 		.catch((fehler) => {
@@ -50,6 +50,9 @@ exports.Datenholenmitid = (req, res, next) => {
 			}
 		)
 }
+
+
+
 //put 
 
 exports.update = (req, res, next) => {

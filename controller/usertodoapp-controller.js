@@ -83,8 +83,8 @@ exports.update = (req, res, next) => {
 }
 exports.Aufgabelöschen=(req,res,next)=>{
 	const {_id}=req.params
-	//TodoApp.deleteOne({_id}).then(
-		TodoApp.deleteOne({aufgabe:_id}).then(
+	TodoApp.deleteOne({_id}).then(
+		
 		(ergebnis) => {
 			res.status(200).send(ergebnis);
 		}

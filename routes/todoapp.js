@@ -16,11 +16,12 @@ const validAufgabeUpdate = [
 ]
 router
   .route('/')
-  .get(Datenholen)
+  .get(auth,Datenholen)
   .post(auth,validAufgabeUpdate, erstelleaufgabe)
   
   router.route("/:_id")
   .get(Datenholenmitid)
+ 
   .put(auth,validAufgabeUpdate,update)
 .delete(auth,Aufgabelöschen)
 
