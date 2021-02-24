@@ -12,26 +12,23 @@ exports.Datenholen = (req, res, next) => {
 			res.status(500).send(fehler)
 		})
 }
-//erledigt welche nutzer ist gerade eingeloggt und welche aufgabe die nutzer hat erledigt
-exports.erledigt = async (req, res, next) => {
-	
-	const {_id}=req.tokenNutzer.userId;
-	
-	console.log("bin im fuktion-erledigt=")
-	try {
 
-	
-		let eingelogghtenutzer = await TodoApp.findOne({id: req.tokenNutzer.userId},{erledigt:aufgabe.erledigt})
-		console.log(eingelogghtenutzer);
-	
-		if (eingelogghtenutzer === null) {
-			return res.status(401).send('Du bist nicht eingeloggte nutzer!')
+//erledigt : welche nutzer ist gerade eingeloggt und welche aufgabe die nutzer hat erledigt
+exports.erledigt = async (req, res, next) => {
+	try {
+		let eingeloggtenutzer = await TodoApp.findOne({_id: req.tokenNutzer.userId})
+		console.log("eingeloggtenutzer=",eingeloggtenutzer)
+		if (eingeloggtenutzer === null) {
+			return res.status(401).send('Du kannst nicht einloggen werden!')
 		}
-	} catch (error) {
-		res.status(401).send('Du konntest nicht eingeloggt werden')
+
+	let erledigteaufgabe=await TodoApp.findOne({erledigt: aufgabe.erledigt})
+	res.status(200).send(erledigteaufgabe)
+	}
+	 catch (error) {
+		res.status(401).send('bei erledigte Aufgabe etwas schief gelaufen!')
 	}
 }
-
 
 //post:
 exports.erstelleaufgabe = (req, res, next) => {
