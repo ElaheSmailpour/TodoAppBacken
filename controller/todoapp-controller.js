@@ -1,11 +1,11 @@
 
 const { validationResult } = require('express-validator')
-const TodoApp = require("../models/todoappmodel")
+const TodoAufgabe = require("../models/todoappmodel")
 
 //get
 exports.Datenholen = (req, res, next) => {
 	
-	TodoApp.find({userId:req.tokenNutzer.userId}).then((ergebnis) => {
+	TodoAufgabe.find({userId:req.tokenNutzer.userId}).then((ergebnis) => {
 		res.status(200).send(ergebnis)
 	})
 		.catch((fehler) => {
@@ -16,14 +16,14 @@ exports.Datenholen = (req, res, next) => {
 //erledigt : welche nutzer ist gerade eingeloggt und welche aufgabe die nutzer hat erledigt
 exports.erledigt = async (req, res, next) => {
 	try {
-		let eingeloggtenutzer = await TodoApp.findOne({_id: req.tokenNutzer.userId})
+		let eingeloggtenutzer = await TodoAufgabe.find({userId: req.tokenNutzer.userId,erledigt:true})
 		console.log("eingeloggtenutzer=",eingeloggtenutzer)
+	
 		if (eingeloggtenutzer === null) {
 			return res.status(401).send('Du kannst nicht einloggen werden!')
 		}
-
-	let erledigteaufgabe=await TodoApp.findOne({erledigt: aufgabe.erledigt})
-	res.status(200).send(erledigteaufgabe)
+		res.status(200).send(eingeloggtenutzer)
+	
 	}
 	 catch (error) {
 		res.status(401).send('bei erledigte Aufgabe etwas schief gelaufen!')
@@ -42,7 +42,7 @@ console.log(errors.array())
 			fehlerBeiValidierung: errors.array()
 		})
 	}
-	TodoApp.create(aufgabe).then(
+	TodoAufgabe.create(aufgabe).then(
 		(ergebnis) => {
 			res.status(201).send(ergebnis);
 		}
@@ -56,7 +56,7 @@ console.log(errors.array())
 exports.Datenholenmitid = (req, res, next) => {
 	const { _id } = req.params;
 	
-	TodoApp.findOne({ _id }).then(
+	TodoAufgabe.findOne({ _id }).then(
 		(ergebnis) => {
 			res.status(200).send(ergebnis);
 		}
@@ -81,7 +81,7 @@ exports.update = (req, res, next) => {
 			fehlerBeiValidierung: errors.array()
 		})
 	}
-	TodoApp.findOneAndUpdate({ _id }, nutzerDaten, { new: true, upsert: true }).then(
+	TodoAufgabe.findOneAndUpdate({ _id }, nutzerDaten, { new: true, upsert: true }).then(
 		(ergebnis) => {
 			res.status(200).send(ergebnis);
 		}
@@ -94,7 +94,7 @@ exports.update = (req, res, next) => {
 }
 exports.Aufgabelöschen=(req,res,next)=>{
 	const {_id}=req.params
-	TodoApp.deleteOne({_id}).then(
+	TodoAufgabe.deleteOne({_id}).then(
 		(ergebnis) => {
 			res.status(200).send(ergebnis);
 		}
