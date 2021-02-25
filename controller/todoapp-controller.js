@@ -72,7 +72,7 @@ exports.Datenholenmitid = (req, res, next) => {
 
 //put 
 
-exports.update = (req, res, next) => {
+exports.markierteaufgabe = (req, res, next) => {
 	const { _id } = req.params;
 	const nutzerDaten = req.body
 	const errors = validationResult(req)
@@ -81,7 +81,9 @@ exports.update = (req, res, next) => {
 			fehlerBeiValidierung: errors.array()
 		})
 	}
-	TodoAufgabe.findOneAndUpdate({ _id }, nutzerDaten, { new: true, upsert: true }).then(
+	
+	TodoAufgabe.findOneAndUpdate({ _id }, {erledigt:true})
+	.then(
 		(ergebnis) => {
 			res.status(200).send(ergebnis);
 		}
