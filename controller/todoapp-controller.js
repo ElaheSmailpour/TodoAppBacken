@@ -16,13 +16,13 @@ exports.Datenholen = (req, res, next) => {
 //erledigt : welche nutzer ist gerade eingeloggt und welche aufgabe die nutzer hat erledigt
 exports.erledigt = async (req, res, next) => {
 	try {
-		let eingeloggtenutzer = await TodoAufgabe.find({userId: req.tokenNutzer.userId,erledigt:true})
-		console.log("eingeloggtenutzer=",eingeloggtenutzer)
+		let erledigteaufgabe = await TodoAufgabe.find({userId: req.tokenNutzer.userId,erledigt:true})
+		console.log("erledigteaufgabe=",erledigteaufgabe)
 	
-		if (eingeloggtenutzer === null) {
+		if (erledigteaufgabe === null) {
 			return res.status(401).send('Du kannst nicht einloggen werden!')
 		}
-		res.status(200).send(eingeloggtenutzer)
+		res.status(200).send(erledigteaufgabe)
 	
 	}
 	 catch (error) {
